@@ -1,6 +1,7 @@
 import random
 import string
 
+
 def generate_serie(start_number):
     prefix = ''.join(random.choices(string.ascii_uppercase, k=5))
     number = str(start_number).zfill(3)

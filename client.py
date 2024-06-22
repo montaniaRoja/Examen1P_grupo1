@@ -1,14 +1,14 @@
 import socket
 import json
 
-def client(metodoTransaccion) :
+
+def client(metodoTransaccion):
     IP = socket.gethostbyname(socket.gethostname())
     PORT = 5566
     ADDR = (IP, PORT)
     SIZE = 1024
     FORMAT = "utf-8"
     DISCONNECT_MSG = "!DISCONNECT"
-
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
@@ -25,8 +25,3 @@ def client(metodoTransaccion) :
             msg = client.recv(SIZE).decode(FORMAT)
             result = json.loads(msg)
             return result
-           
-            
-         
-
-

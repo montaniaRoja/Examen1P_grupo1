@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class Conexion():
     nombreBD = "manejoClientes.db"
 
@@ -13,7 +14,6 @@ class Conexion():
         self.cursor.close()
         self.conexion.close()
         print("Conexión cerrada.")
-
 
     def crear_tabla(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS clientes
@@ -33,20 +33,17 @@ VALUES
         self.conexion.commit()
         print("Cliente registrado")
 
-    
     def consultarClientes(self):
         self.cursor.execute('''SELECT * FROM clientes''')
         self.conexion.commit()
         clientes = self.cursor.fetchall()
         return clientes
 
-
     def consultarCliente(self, id_cliente):
         self.cursor.execute('''SELECT * FROM clientes WHERE id_cliente = ? ''', (id_cliente,))
         self.conexion.commit()
         clientes = self.cursor.fetchall()
         return clientes
-    
 
     def consultarClienteEstado(self, id_cliente):
         self.cursor.execute('''SELECT * FROM clientes WHERE id_cliente = ? AND estado = "A" ''', (id_cliente,))
@@ -54,17 +51,16 @@ VALUES
         cliente = self.cursor.fetchall()
         return cliente
 
-    def pagoCliente(self, fechaPagoRealizado,referencia,id_cliente, cuota):
-        self.cursor.execute('''UPDATE clientes SET pagofecharealizado = ?, estado = "B" , referencia = ?  WHERE id_cliente = ? AND cuota = ? ''', (fechaPagoRealizado, referencia,id_cliente, cuota,))
+    def pagoCliente(self, fechaPagoRealizado, referencia, id_cliente, cuota):
+        self.cursor.execute(
+            '''UPDATE clientes SET pagofecharealizado = ?, estado = "B" , referencia = ?  WHERE id_cliente = ? AND cuota = ? ''',
+            (fechaPagoRealizado, referencia, id_cliente, cuota,))
         self.conexion.commit()
         return referencia
-    
+
     def reversion(self, codigoCliente, referencia):
-        
-        self.cursor.execute('''UPDATE clientes SET pagofecharealizado = "", estado = "A" , referencia = ""  WHERE id_cliente = ? AND referencia = ? ''', (codigoCliente,referencia))
+        self.cursor.execute(
+            '''UPDATE clientes SET pagofecharealizado = "", estado = "A" , referencia = ""  WHERE id_cliente = ? AND referencia = ? ''',
+            (codigoCliente, referencia))
         self.conexion.commit()
         return "00"
-    
-
-    
-    
